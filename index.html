@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#e7f9ee">
-<title>PPULL Ping Pong V49.5</title>
+<title>PPULL Ping Pong V49.8</title>
 
 <style>
 html,body{margin:0;min-height:100%;background:#e7f9ee}
@@ -445,9 +445,64 @@ function chooseV42(kind){
   if(st.micReady){st.micGate=Promise.resolve(true);chooseV38(kind)}
   else{beginMicGateV42();chooseV38(kind)}
 }
+
+/* V49.8 — automatic PING -> microphone handoff.
+   Use the browser voice immediately for the automatic PING prompt, then
+   start the existing Baby-English-style recognition/retry engine only after
+   PING has finished speaking. Manual PING replay remains unchanged. */
+async function playPingDirectV498(text){
+  if(!text||st.paused)return;
+  unlockAudio();
+  await browserVoiceV33(text);
+}
+async function playPromptV498(skipGate){
+  const c=current();if(!c||st.paused)return;
+
+  if(st.mode==='practice'&&!skipGate){
+    if(st.micGate){
+      const ok=await st.micGate;st.micGate=null;
+      if(!ok||st.paused)return;
+    }else if(!st.micReady){
+      const ok=await beginMicGateV42();st.micGate=null;
+      if(!ok||st.paused)return;
+    }
+  }
+  if(st.mode==='practice'&&!st.micReady)return;
+
+  stopRecognitionV40();
+  primeLessonAudioV495();
+  el('pp29Status').textContent=
+    attemptMessageV39(st.tries+1)+' · '+tr('聞いてください…','LISTEN…');
+
+  try{
+    if(st.settings.promptAudio)await playPingDirectV498(c.prompt);
+  }catch(err){
+    console.warn('V49.8 automatic PING audio',err);
+  }
+
+  await sleep(300);
+  if(st.paused)return;
+
+  el('pp29Status').textContent=
+    attemptMessageV39(st.tries+1)+' · '+tr('あなたの番です！','YOUR TURN!');
+  setTurn(true);
+
+  if(st.mode==='practice'){
+    startRecognitionV40(true);
+    return;
+  }
+
+  await sleep(2000);
+  if(st.paused)return;
+  await playAnswer();
+  if(!st.settings.answerAudio)await sleep(1200);
+  await sleep(650);
+  if(!st.paused)move(1);
+}
+
 function replayHistoryV40(key,kind){const entry=st.history.find(x=>x.key===key);if(!entry)return;if(kind==='answer'&&entry.key===historyKey()&&st.mode==='practice'&&!entry.shown)return respondV40();audio(kind==='answer'?entry.answer:entry.prompt,kind==='answer'?'PONG':'PING')}
-renderConversation=renderConversationV38;renderPractice=renderPracticeV38;playPrompt=playPromptV42;respond=respondV40;setMode=setModeV38;
-return{testMicrophone:testMicrophoneV494,open:openV38,login:loginV38,claimGuest:claimGuestV38,closeLogin,choose:chooseV42,jumpLevel:jumpLevelV36,selectEnglishLevel:selectEnglishLevelV36,submitInlineSpeakUp,submitPopupSpeakUp,setMode:setModeV38,toggleHints,playPrompt:playPromptV42,playAnswer,respond:respondV40,move,toggleReview,togglePromptReview:togglePromptReviewV38,pause,backHome,end,close,openSpeakUp,closeSpeakUp,goToSpeakUp,changeInterfaceLanguage,replayHistory:replayHistoryV40,returnCurrent,openSettings:openSettingsV38,closeSettings,saveSettings:saveSettingsV38,openEvent,eventMove,eventAudio,eventTurn,eventRecognize,eventAutomatic,eventCoachCheck,eventToggleAnswer,eventToggleHints,closeEvent}})();openLearningV274=function(language){PPPractice.open(language)};lesson=function(eventId){PPPractice.openEvent(eventId)};
+renderConversation=renderConversationV38;renderPractice=renderPracticeV38;playPrompt=playPromptV498;respond=respondV40;setMode=setModeV38;
+return{testMicrophone:testMicrophoneV494,open:openV38,login:loginV38,claimGuest:claimGuestV38,closeLogin,choose:chooseV42,jumpLevel:jumpLevelV36,selectEnglishLevel:selectEnglishLevelV36,submitInlineSpeakUp,submitPopupSpeakUp,setMode:setModeV38,toggleHints,playPrompt:playPromptV498,playAnswer,respond:respondV40,move,toggleReview,togglePromptReview:togglePromptReviewV38,pause,backHome,end,close,openSpeakUp,closeSpeakUp,goToSpeakUp,changeInterfaceLanguage,replayHistory:replayHistoryV40,returnCurrent,openSettings:openSettingsV38,closeSettings,saveSettings:saveSettingsV38,openEvent,eventMove,eventAudio,eventTurn,eventRecognize,eventAutomatic,eventCoachCheck,eventToggleAnswer,eventToggleHints,closeEvent}})();openLearningV274=function(language){PPPractice.open(language)};lesson=function(eventId){PPPractice.openEvent(eventId)};
 </script>
 
 
