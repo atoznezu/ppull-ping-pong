@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#e7f9ee">
-<title>PPULL Ping Pong V49.8</title>
+<title>PPULL Ping Pong V50</title>
 
 <style>
 html,body{margin:0;min-height:100%;background:#e7f9ee}
@@ -247,7 +247,7 @@ el('pp29ModePractice').textContent=tr('スピーキング本番','LET’S TALK!'
 function reviewQueueV38(sets){return sets.map(set=>({...set,prompts:set.prompts.map((p,i)=>({...p,_originalPromptNumber:i+1})).filter(p=>isPromptReviewedV38(set.setId,p._originalPromptNumber))})).filter(set=>set.prompts.length)}
 function chooseV38(kind){unlockAudio();if(!st.sets.length)return;if(!st.email&&(kind!=='start'||(st.guestResults||[]).filter(x=>x.completed).length>=3))return showLogin((st.guestResults||[]).filter(x=>x.completed).length>=3);const group=st.language==='English'?englishGroupSetsV36(selectedEnglishLevelV36()):ordered(),completedIds=new Set(st.email?[...st.progress.entries()].filter(([,p])=>p.completed).map(([id])=>Number(id)):(st.guestResults||[]).filter(x=>x.completed).map(x=>Number(x.setId))),next=Math.max(0,group.findIndex(x=>!completedIds.has(Number(x.setId))));st.queue=kind==='review'?reviewQueueV38(group):group.map(set=>({...set,prompts:set.prompts.map((p,i)=>({...p,_originalPromptNumber:i+1}))}));if(kind==='review'&&!st.queue.length)return alert(tr('REVIEWにチェックした文はまだありません。','No prompts are marked for REVIEW yet.'));st.setIndex=kind==='start'?(st.email?0:next):kind==='back'?Math.max(0,next-1):kind==='review'?0:next;st.promptIndex=0;st.score=0;st.setPoints=0;st.tries=0;st.scoredPrompts=new Set();st.mode='practice';st.paused=false;st.history=[];st.follow=true;st.lastMilestone=Math.floor(totalScore()/100)*100;show('pp29Practice');renderPracticeV38();
 requestAnimationFrame(()=>{try{if(el('pp31ChatLog')&&!el('pp31ChatLog').children.length)renderConversationV38()}catch(err){console.error('V49.2 chat paint fallback',err)}});
-setupScrollWatcher();setTimeout(playPrompt,150)}
+setupScrollWatcher();if(!st.directStartFromGesture)setTimeout(playPrompt,150)}
 async function playPromptV38(){const c=current();if(!c||st.paused)return;unlockAudio();el('pp29Status').textContent=tr('聞いてください…','LISTEN…');if(st.settings.promptAudio)await audio(c.prompt,'PING');if(st.paused)return;el('pp29Status').textContent=tr('あなたの番です！','YOUR TURN!');setTurn(true);if(st.mode==='practice'){setTimeout(respondV38,300);return}await sleep(2000);if(st.paused)return;await playAnswer();if(!st.settings.answerAudio)await sleep(1200);await sleep(650);if(!st.paused)move(1)}
 function respondV38(){if(st.paused||st.listening)return;if(st.mode!=='practice')return playPromptV38();const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){alert(tr('音声認識にはGoogle Chromeをご利用ください。','Speech recognition requires Google Chrome.'));return}if(st.recognition)try{st.recognition.abort()}catch(ignore){}const r=new R();st.recognition=r;st.listening=true;r.lang=langCode();r.interimResults=false;r.continuous=false;el('pp29Status').textContent=tr('聞いています…','LISTENING…');let handled=false;r.onresult=async e=>{if(handled)return;handled=true;st.listening=false;const heard=e.results[0][0].transcript,c=current(),entry=ensureHistory();setTurn(false);entry.answer=heard;entry.shown=true;renderConversationV38();st.tries++;const ok=similarity(heard,c.answer)>=.58;el('pp29Status').textContent=(ok?'✓ ':tr('もう一度 · ','TRY AGAIN · '))+heard;if(ok||st.tries>=3){const scoreKey=historyKey(),pts=st.scoredPrompts.has(scoreKey)?0:(ok?Math.max(1,4-st.tries):1);st.scoredPrompts.add(scoreKey);st.score+=pts;st.setPoints+=pts;if(pts)showPoints(pts);progressUI();if(!ok)await togglePromptReviewV38(currentSet().setId,promptNumberV38(),true);await sleep(550);entry.answer=c.answer;await playAnswer();st.tries=0;await sleep(900);move(1)}else{await sleep(700);entry.answer=c.answer;entry.shown=false;renderConversationV38();playPromptV38()}};r.onerror=e=>{st.listening=false;if(e.error==='aborted')return;el('pp29Status').textContent=tr('聞き取れませんでした。もう一度答えてください。','I COULDN’T HEAR YOU. PLEASE TRY AGAIN.');setTurn(true)};r.onend=()=>{st.listening=false};try{r.start()}catch(e){st.listening=false;setTurn(true)}}
 function setModeV38(mode){if(!['practice','along'].includes(mode))mode='along';stopMedia();st.paused=false;st.mode=mode;st.tries=0;renderPracticeV38();setTimeout(playPrompt,120)}
@@ -439,32 +439,50 @@ function primeLessonAudioV495(){
 function chooseV42(kind){
   st.flow=kind;
   primeLessonAudioV495();
-  // PING must be audible in Speaking Practice. The learner can still control
-  // answer audio separately in Settings.
   st.settings.promptAudio=true;
-  if(st.micReady){st.micGate=Promise.resolve(true);chooseV38(kind)}
-  else{beginMicGateV42();chooseV38(kind)}
+
+  // V50: START/CONTINUE/BACK/REVIEW are trusted user clicks.
+  // Build the practice screen synchronously, suppress the old 150 ms timer,
+  // and launch PING immediately from this same click path.
+  st.directStartFromGesture=true;
+
+  if(st.micReady){
+    st.micGate=null;
+    chooseV38(kind);
+    st.directStartFromGesture=false;
+    if(el('pp29Practice')?.classList.contains('show')){
+      playPromptV500(true);
+    }
+    return;
+  }
+
+  const gate=beginMicGateV42();
+  chooseV38(kind);
+  st.directStartFromGesture=false;
+  gate.then(ok=>{
+    if(ok&&!st.paused&&el('pp29Practice')?.classList.contains('show')){
+      playPromptV500(true);
+    }
+  });
 }
 
-/* V49.9 — visible listening state + stronger automatic recognition retry.
-   V49.8 automatic PING -> microphone handoff.
-   Use the browser voice immediately for the automatic PING prompt, then
-   start the existing Baby-English-style recognition/retry engine only after
-   PING has finished speaking. Manual PING replay remains unchanged. */
-async function playPingDirectV498(text){
-  if(!text||st.paused)return;
-  unlockAudio();
-  await browserVoiceV33(text);
-}
-async function playPromptV498(skipGate){
-  const c=current();if(!c||st.paused)return;
+/* V50 — trusted-click automatic PING + microphone handoff.
+   The previous versions scheduled automatic playback 150 ms after START.
+   Manual PING worked because it began from a direct click. V50 starts the
+   same audio() path immediately from START/CONTINUE/BACK/REVIEW, then begins
+   speech recognition only after the prompt audio has finished. */
+async function playPromptV500(skipGate){
+  const c=current();
+  if(!c||st.paused)return;
 
   if(st.mode==='practice'&&!skipGate){
     if(st.micGate){
-      const ok=await st.micGate;st.micGate=null;
+      const ok=await st.micGate;
+      st.micGate=null;
       if(!ok||st.paused)return;
     }else if(!st.micReady){
-      const ok=await beginMicGateV42();st.micGate=null;
+      const ok=await beginMicGateV42();
+      st.micGate=null;
       if(!ok||st.paused)return;
     }
   }
@@ -472,17 +490,19 @@ async function playPromptV498(skipGate){
 
   stopRecognitionV40();
   primeLessonAudioV495();
+
   el('pp29Status').textContent=
     attemptMessageV39(st.tries+1)+' · '+tr('聞いてください…','LISTEN…');
 
   try{
-    if(st.settings.promptAudio)await playPingDirectV498(c.prompt);
+    // EXACT SAME audio path used by clicking the PING avatar.
+    if(st.settings.promptAudio)await audio(c.prompt,'PING');
   }catch(err){
-    console.warn('V49.8 automatic PING audio',err);
+    console.warn('V50 automatic PING audio',err);
   }
 
-  await sleep(300);
   if(st.paused)return;
+  await sleep(250);
 
   el('pp29Status').textContent=
     attemptMessageV39(st.tries+1)+' · '+tr('あなたの番です！','YOUR TURN!');
@@ -502,8 +522,8 @@ async function playPromptV498(skipGate){
 }
 
 function replayHistoryV40(key,kind){const entry=st.history.find(x=>x.key===key);if(!entry)return;if(kind==='answer'&&entry.key===historyKey()&&st.mode==='practice'&&!entry.shown)return respondV40();audio(kind==='answer'?entry.answer:entry.prompt,kind==='answer'?'PONG':'PING')}
-renderConversation=renderConversationV38;renderPractice=renderPracticeV38;playPrompt=playPromptV498;respond=respondV40;setMode=setModeV38;
-return{testMicrophone:testMicrophoneV494,open:openV38,login:loginV38,claimGuest:claimGuestV38,closeLogin,choose:chooseV42,jumpLevel:jumpLevelV36,selectEnglishLevel:selectEnglishLevelV36,submitInlineSpeakUp,submitPopupSpeakUp,setMode:setModeV38,toggleHints,playPrompt:playPromptV498,playAnswer,respond:respondV40,move,toggleReview,togglePromptReview:togglePromptReviewV38,pause,backHome,end,close,openSpeakUp,closeSpeakUp,goToSpeakUp,changeInterfaceLanguage,replayHistory:replayHistoryV40,returnCurrent,openSettings:openSettingsV38,closeSettings,saveSettings:saveSettingsV38,openEvent,eventMove,eventAudio,eventTurn,eventRecognize,eventAutomatic,eventCoachCheck,eventToggleAnswer,eventToggleHints,closeEvent}})();openLearningV274=function(language){PPPractice.open(language)};lesson=function(eventId){PPPractice.openEvent(eventId)};
+renderConversation=renderConversationV38;renderPractice=renderPracticeV38;playPrompt=playPromptV500;respond=respondV40;setMode=setModeV38;
+return{testMicrophone:testMicrophoneV494,open:openV38,login:loginV38,claimGuest:claimGuestV38,closeLogin,choose:chooseV42,jumpLevel:jumpLevelV36,selectEnglishLevel:selectEnglishLevelV36,submitInlineSpeakUp,submitPopupSpeakUp,setMode:setModeV38,toggleHints,playPrompt:playPromptV500,playAnswer,respond:respondV40,move,toggleReview,togglePromptReview:togglePromptReviewV38,pause,backHome,end,close,openSpeakUp,closeSpeakUp,goToSpeakUp,changeInterfaceLanguage,replayHistory:replayHistoryV40,returnCurrent,openSettings:openSettingsV38,closeSettings,saveSettings:saveSettingsV38,openEvent,eventMove,eventAudio,eventTurn,eventRecognize,eventAutomatic,eventCoachCheck,eventToggleAnswer,eventToggleHints,closeEvent}})();openLearningV274=function(language){PPPractice.open(language)};lesson=function(eventId){PPPractice.openEvent(eventId)};
 </script>
 
 
