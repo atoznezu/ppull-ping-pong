@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#e7f9ee">
-<title>PPULL Ping Pong V57 POLISHED CONVERSATION</title>
+<title>PPULL Ping Pong V58 ADMIN</title>
 
 <style>
 html,body{margin:0;min-height:100%;background:#e7f9ee}
@@ -1103,6 +1103,75 @@ body{overflow:auto}
 }
 </style>
 
+
+<style id="pp58AdminStyles">
+.pp58-admin-hash{
+  position:fixed;right:10px;bottom:8px;z-index:118;
+  border:0;background:transparent;color:#8b9b98;
+  font-size:14px;font-weight:800;opacity:.42;cursor:pointer;
+  padding:6px 9px
+}
+.pp58-admin-hash:hover{opacity:1;color:#17335d}
+.pp58-admin{
+  position:fixed;inset:0;z-index:500;background:#eef6f2;
+  display:none;overflow:auto;color:#17335d;
+  font-family:Arial,"Noto Sans JP",sans-serif
+}
+.pp58-admin.show{display:block}
+.pp58-admin *{box-sizing:border-box}
+.pp58-shell{width:min(1280px,100%);margin:auto;padding:20px}
+.pp58-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}
+.pp58-head h1{margin:0;font-size:clamp(1.7rem,3.4vw,2.7rem)}
+.pp58-close{border:0;background:#fff;width:44px;height:44px;border-radius:50%;font-size:24px;box-shadow:0 5px 16px #17335d20;cursor:pointer}
+.pp58-login{width:min(520px,100%);margin:12vh auto;background:#fff;border-radius:26px;padding:30px;box-shadow:0 18px 45px #17335d22}
+.pp58-login h2{margin-top:0}
+.pp58-login input{width:100%;padding:14px 16px;border:1px solid #bfd0c8;border-radius:14px;font-size:1rem;margin:12px 0}
+.pp58-login button,.pp58-btn{border:0;border-radius:13px;padding:11px 16px;font-weight:900;cursor:pointer}
+.pp58-login button,.pp58-btn.primary{background:#0b9d62;color:#fff}
+.pp58-btn.blue{background:#2479d8;color:#fff}
+.pp58-btn.red{background:#d84c52;color:#fff}
+.pp58-btn.ghost{background:#fff;border:1px solid #c7d5cf;color:#17335d}
+.pp58-btn.gold{background:#f4b942;color:#17335d}
+.pp58-error{color:#b52731;font-weight:850;margin-top:10px}
+.pp58-dashboard{display:none}
+.pp58-dashboard.show{display:block}
+.pp58-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.pp58-stat{background:#fff;border-radius:18px;padding:16px;box-shadow:0 6px 18px #17335d12}
+.pp58-stat small{display:block;color:#70847d;font-weight:850}
+.pp58-stat b{display:block;font-size:1.8rem;margin-top:5px}
+.pp58-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.pp58-tab{border:1px solid #c4d5ce;background:#fff;color:#17335d;border-radius:999px;padding:10px 17px;font-weight:900;cursor:pointer}
+.pp58-tab.on{background:#173f73;color:#fff;border-color:#173f73}
+.pp58-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:#fff;border-radius:16px;padding:12px;margin-bottom:14px}
+.pp58-toolbar input,.pp58-toolbar select{padding:10px 12px;border:1px solid #c9d7d1;border-radius:10px}
+.pp58-panel{display:none}.pp58-panel.show{display:block}
+.pp58-list{display:grid;gap:14px}
+.pp58-card{background:#fff;border-radius:20px;padding:18px;box-shadow:0 7px 20px #17335d12}
+.pp58-card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.pp58-badge{display:inline-block;border-radius:999px;padding:5px 9px;background:#eaf4ff;color:#1c65ab;font-size:.78rem;font-weight:950}
+.pp58-badge.pending{background:#fff4cf;color:#8a6110}.pp58-badge.approved{background:#e6f8ec;color:#0a7c42}.pp58-badge.rejected{background:#ffe7e8;color:#a42a31}
+.pp58-meta{color:#70847d;font-size:.88rem;margin-top:6px}
+.pp58-origin{font-weight:900;font-size:1.05rem;margin:12px 0;padding:12px 14px;background:#f6faf8;border-radius:12px}
+.pp58-prompts{display:grid;gap:8px;margin:12px 0}
+.pp58-prompt{border:1px solid #dbe6e1;border-radius:12px;padding:10px 12px}
+.pp58-prompt b{display:block;margin-bottom:5px}.pp58-prompt small{display:block;color:#687c75;margin-top:3px}
+.pp58-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.pp58-card textarea{width:100%;min-height:90px;border:1px solid #cbd8d2;border-radius:12px;padding:10px;font-family:monospace}
+.pp58-tablewrap{overflow:auto;background:#fff;border-radius:18px;box-shadow:0 6px 18px #17335d12}
+.pp58-table{width:100%;border-collapse:collapse;min-width:760px}
+.pp58-table th,.pp58-table td{padding:11px 12px;border-bottom:1px solid #e7efeb;text-align:left}
+.pp58-table th{background:#f5f9f7;font-size:.82rem}
+.pp58-empty{background:#fff;border-radius:18px;padding:24px;text-align:center;color:#6e817a}
+.pp58-subtabs{display:flex;gap:8px;margin:8px 0 14px}
+.pp58-subtabs button{border:0;border-radius:999px;padding:8px 14px;font-weight:900;cursor:pointer;background:#e9f0ed}
+.pp58-subtabs button.on{background:#0b9d62;color:#fff}
+@media(max-width:850px){
+ .pp58-summary{grid-template-columns:1fr 1fr}
+ .pp58-card-head{display:block}
+}
+@media(max-width:520px){.pp58-summary{grid-template-columns:1fr}}
+</style>
+
 </head>
 <body>
 
@@ -1152,7 +1221,7 @@ body{overflow:auto}
 <button id="pp494MicButton" type="button" onclick="PPPractice.testMicrophone()">🎤 マイクをテスト</button>
 <div id="pp494MicStatus" class="pp494-mic-status">まだマイクをテストしていません。</div>
 </div><div class="pp29-round"><div class="pp29-round-head"><span>このラウンド / THIS ROUND</span><span id="pp29HomeRoundCount">0 / 5</span></div><div class="pp29-bar"><span id="pp29HomeRoundBar"></span></div><small id="pp29HomeRoundLabel">ROUND 1</small></div><div class="pp29-menu"><button class="pp29-card" onclick="PPPractice.choose('start')"><b>START</b><small>最初のセットから始めます。</small></button><button class="pp29-card" onclick="PPPractice.choose('continue')"><b>CONTINUE</b><small>続きのセットから始めます。</small></button><button class="pp29-card" onclick="PPPractice.choose('back')"><b>BACK</b><small>ひとつ前のセットに戻ります。</small></button><button class="pp29-card" onclick="PPPractice.choose('review')"><b>REVIEW</b><small id="pp29ReviewCount">REVIEWにチェックした文を練習します。</small></button></div></div></section>
-<section id="pp29Practice" class="pp29"><div class="pp29-shell"><div class="pp29-controlbar"><div class="pp29-stat"><small>今日:</small><b id="pp29RoundScore">0</b><small>点</small></div><div class="pp29-stat"><small>合計</small><b id="pp29TotalScore">0</b><small>点</small></div><button onclick="PPPractice.openSpeakUp()">🎤 SPEAK-UP</button><button onclick="PPPractice.openSettings()">⚙ 設定</button><button onclick="PPPractice.backHome()">⌂ ホーム</button><button id="pp29Pause" onclick="PPPractice.pause()">一時停止</button><button class="end" onclick="PPPractice.end()">終了</button></div><div class="pp29-progressgrid"><div class="pp29-progressbox"><div class="pp29-progress-head"><span>今の練習</span><span id="pp29CurrentCount">1 / 5</span></div><div class="pp29-bar"><span id="pp29CurrentBar"></span></div><small id="pp29SessionLabel"></small></div><div class="pp29-progressbox"><div class="pp29-progress-head"><span>全体の進み具合</span><span id="pp29OverallPercent">0%</span></div><div class="pp29-bar"><span id="pp29OverallBar"></span></div><small id="pp29OverallLabel"></small></div></div><div class="pp29-top"><div><div id="pp29PracticeBrand" class="pp29-eyebrow"></div><div style="font-size:11px;font-weight:900;color:#6b7f93;letter-spacing:.08em;margin-top:3px">BUILD V57 · V52 BABY CORE</div><h1 id="pp29PracticePosition" class="pp29-title"></h1></div></div><div class="pp29-modes"><button id="pp29ModePractice" class="pp29-btn ghost on" onclick="PPPractice.setMode('practice')">スピーキング本番</button><button id="pp29ModeAlong" class="pp29-btn ghost" onclick="PPPractice.setMode('along')">いっしょに言う練習</button><button id="pp29ModeAuto" class="pp29-btn ghost" onclick="PPPractice.setMode('auto')">AUTOMATIC</button><button id="pp29HintToggle" class="pp29-btn ghost on" onclick="PPPractice.toggleHints()">HINTS</button></div><div class="pp29-chat pp31-chat"><div id="pp31SpeakTip" class="pp31-speak-tip" onclick="PPPractice.goToSpeakUp()"></div><div id="pp31ChatLog" class="pp31-chat-log"></div><button id="pp31ReturnCurrent" class="pp31-return" onclick="PPPractice.returnCurrent()">↓ RETURN TO CURRENT PROMPT</button></div><div id="pp29Status" class="pp29-status"></div><div class="pp29-controls"><button class="pp29-btn ghost" onclick="PPPractice.move(-1)">← BACK</button><button class="pp29-btn primary" onclick="PPPractice.playPrompt()">🔊 PING</button><button class="pp29-btn green" onclick="PPPractice.respond()">🎤 PONG</button><button class="pp29-btn orange" onclick="PPPractice.playAnswer()">🔊 ANSWER</button><button id="pp29Review" class="pp29-btn ghost pp29-review" onclick="PPPractice.toggleReview()">☆ REVIEW</button><button class="pp29-btn primary" onclick="PPPractice.move(1)">NEXT →</button></div><div id="pp30Below" class="pp30-below"><section class="pp30-panel speakup"><div class="pp30-origin" id="pp30SpeakEyebrow">PING PONG ENGLISH SPEAK-UP</div><h2 id="pp30SpeakTitle">あなたが言いたいことをPING PONG ENGLISHへ</h2><p id="pp30SpeakHelp"></p><div class="pp30-speakform"><textarea id="pp30SpeakText"></textarea><button id="pp30SpeakButton" class="pp29-btn orange" onclick="PPPractice.submitInlineSpeakUp()">SEND / 送る</button></div><div id="pp30SpeakFeedback" class="pp30-feedback"></div></section><section class="pp30-panel"><div class="pp30-origin">CHOOSE YOUR LEVEL / レベルを選ぶ</div><h2 id="pp30LevelTitle"></h2><p id="pp30LevelHelp" class="pp30-note"></p><div id="pp30LevelTop" class="pp30-leveltop"></div><div id="pp30Letters" class="pp30-letters"></div></section><section class="pp30-panel pp30-patterns"><div id="pp30Patterns"></div></section></div></div></section>
+<section id="pp29Practice" class="pp29"><div class="pp29-shell"><div class="pp29-controlbar"><div class="pp29-stat"><small>今日:</small><b id="pp29RoundScore">0</b><small>点</small></div><div class="pp29-stat"><small>合計</small><b id="pp29TotalScore">0</b><small>点</small></div><button onclick="PPPractice.openSpeakUp()">🎤 SPEAK-UP</button><button onclick="PPPractice.openSettings()">⚙ 設定</button><button onclick="PPPractice.backHome()">⌂ ホーム</button><button id="pp29Pause" onclick="PPPractice.pause()">一時停止</button><button class="end" onclick="PPPractice.end()">終了</button></div><div class="pp29-progressgrid"><div class="pp29-progressbox"><div class="pp29-progress-head"><span>今の練習</span><span id="pp29CurrentCount">1 / 5</span></div><div class="pp29-bar"><span id="pp29CurrentBar"></span></div><small id="pp29SessionLabel"></small></div><div class="pp29-progressbox"><div class="pp29-progress-head"><span>全体の進み具合</span><span id="pp29OverallPercent">0%</span></div><div class="pp29-bar"><span id="pp29OverallBar"></span></div><small id="pp29OverallLabel"></small></div></div><div class="pp29-top"><div><div id="pp29PracticeBrand" class="pp29-eyebrow"></div><div style="font-size:11px;font-weight:900;color:#6b7f93;letter-spacing:.08em;margin-top:3px">BUILD V58 · V52 BABY CORE</div><h1 id="pp29PracticePosition" class="pp29-title"></h1></div></div><div class="pp29-modes"><button id="pp29ModePractice" class="pp29-btn ghost on" onclick="PPPractice.setMode('practice')">スピーキング本番</button><button id="pp29ModeAlong" class="pp29-btn ghost" onclick="PPPractice.setMode('along')">いっしょに言う練習</button><button id="pp29ModeAuto" class="pp29-btn ghost" onclick="PPPractice.setMode('auto')">AUTOMATIC</button><button id="pp29HintToggle" class="pp29-btn ghost on" onclick="PPPractice.toggleHints()">HINTS</button></div><div class="pp29-chat pp31-chat"><div id="pp31SpeakTip" class="pp31-speak-tip" onclick="PPPractice.goToSpeakUp()"></div><div id="pp31ChatLog" class="pp31-chat-log"></div><button id="pp31ReturnCurrent" class="pp31-return" onclick="PPPractice.returnCurrent()">↓ RETURN TO CURRENT PROMPT</button></div><div id="pp29Status" class="pp29-status"></div><div class="pp29-controls"><button class="pp29-btn ghost" onclick="PPPractice.move(-1)">← BACK</button><button class="pp29-btn primary" onclick="PPPractice.playPrompt()">🔊 PING</button><button class="pp29-btn green" onclick="PPPractice.respond()">🎤 PONG</button><button class="pp29-btn orange" onclick="PPPractice.playAnswer()">🔊 ANSWER</button><button id="pp29Review" class="pp29-btn ghost pp29-review" onclick="PPPractice.toggleReview()">☆ REVIEW</button><button class="pp29-btn primary" onclick="PPPractice.move(1)">NEXT →</button></div><div id="pp30Below" class="pp30-below"><section class="pp30-panel speakup"><div class="pp30-origin" id="pp30SpeakEyebrow">PING PONG ENGLISH SPEAK-UP</div><h2 id="pp30SpeakTitle">あなたが言いたいことをPING PONG ENGLISHへ</h2><p id="pp30SpeakHelp"></p><div class="pp30-speakform"><textarea id="pp30SpeakText"></textarea><button id="pp30SpeakButton" class="pp29-btn orange" onclick="PPPractice.submitInlineSpeakUp()">SEND / 送る</button></div><div id="pp30SpeakFeedback" class="pp30-feedback"></div></section><section class="pp30-panel"><div class="pp30-origin">CHOOSE YOUR LEVEL / レベルを選ぶ</div><h2 id="pp30LevelTitle"></h2><p id="pp30LevelHelp" class="pp30-note"></p><div id="pp30LevelTop" class="pp30-leveltop"></div><div id="pp30Letters" class="pp30-letters"></div></section><section class="pp30-panel pp30-patterns"><div id="pp30Patterns"></div></section></div></div></section>
 <section id="pp29Event" class="pp29 pp29-event"><div class="pp29-shell"><div class="pp29-top"><div><div id="pp29EventBrand" class="pp29-eyebrow"></div><h1 id="pp29EventTitle" class="pp29-title"></h1></div><button class="pp29-close" onclick="PPPractice.closeEvent()">×</button></div><div class="pp29-event-stage"><div id="pp29EventPosition" class="pp29-eyebrow" style="text-align:center"></div><div class="pp29-turn ping"><div class="pp29-avatar"><span>🦦</span><b>PING</b></div><div class="pp29-side"><div id="pp29EventPrompt" class="pp29-bubble prompt"></div></div></div><div class="pp29-turn pong"><div class="pp29-avatar pong"><span>🦦</span><b>PONG</b></div><div class="pp29-side"><div id="pp29EventCue" class="pp29-cue"></div><div id="pp29EventHints" class="pp29-hints"></div><div id="pp29EventAnswer" class="pp29-bubble pp29-response" hidden></div></div></div></div><div id="pp29EventStatus" class="pp29-status">COACH MODE</div><div class="pp29-controls"><button class="pp29-btn ghost" onclick="PPPractice.eventMove(-1)">← BACK</button><button class="pp29-btn primary" onclick="PPPractice.eventAudio('prompt')">🔊 PING</button><button class="pp29-btn green" onclick="PPPractice.eventTurn()">🏓 PLAYER TURN</button><button class="pp29-btn green" onclick="PPPractice.eventRecognize()">🎤 ONE PLAYER</button><button class="pp29-btn orange" onclick="PPPractice.eventAudio('answer')">🔊 ANSWER</button><button id="pp29EventAuto" class="pp29-btn ghost" onclick="PPPractice.eventAutomatic()">AUTOMATIC</button><button class="pp29-btn ghost" onclick="PPPractice.eventCoachCheck('GREAT')">✓ GREAT</button><button class="pp29-btn ghost" onclick="PPPractice.eventCoachCheck('TRY AGAIN')">↻ TRY AGAIN</button><button class="pp29-btn ghost" onclick="PPPractice.eventToggleAnswer()">ANSWER</button><button class="pp29-btn ghost" onclick="PPPractice.eventToggleHints()">HINTS</button><button class="pp29-btn primary" onclick="PPPractice.eventMove(1)">NEXT →</button></div></div></section>
 <section id="pp29Settings" class="pp29-settings"><div class="pp29-settingsbox"><div class="pp29-top"><h2>設定 / SETTINGS</h2><button class="pp29-close" onclick="PPPractice.closeSettings()">×</button></div><label>Prompt Audio / 質問音声 <input id="pp29PromptAudio" type="checkbox" checked></label><label>Response Audio / 返答音声 <input id="pp29AnswerAudio" type="checkbox" checked></label><label>Hints / ヒント <input id="pp29HintsSetting" type="checkbox" checked></label><label>Text Size / 文字サイズ <select id="pp29TextSize"><option value="1">小</option><option value="1.15" selected>中</option><option value="1.3">大</option></select></label><label>Interface Sounds / 操作音 <input id="pp38InterfaceSounds" type="checkbox" checked></label><p><button class="pp29-btn primary" onclick="PPPractice.saveSettings()">SAVE / 保存</button></p></div></section><div id="pp29Wait" class="pp29-wait"><span class="pp29-dot"></span><span>Please wait...<br>少々お待ちください。</span></div>
 <section id="pp32Login" class="pp32-modal" role="dialog" aria-modal="true" aria-labelledby="pp32LoginTitle"><div class="pp32-box"><button class="pp32-modal-close" onclick="PPPractice.closeLogin()" aria-label="Close">×</button><div class="pp32-gate-icon">🏓</div><h2 id="pp32LoginTitle"></h2><p id="pp32LoginMessage"></p><input id="pp32Email" type="email" inputmode="email" autocomplete="email" placeholder="Email"><input id="pp32Nickname" autocomplete="nickname" placeholder="Nickname / ニックネーム"><div class="pp32-actions"><button id="pp32ClaimButton" class="pp29-btn green" onclick="PPPractice.claimGuest()"></button></div><p id="pp32LoginFeedback" class="pp30-feedback" aria-live="polite"></p></div></section>
@@ -2979,6 +3048,201 @@ window.addEventListener('DOMContentLoaded',()=>{
   const p=new URLSearchParams(location.search);
   PP45.open((p.get('lang')||'English').toLowerCase().startsWith('j')?'Japanese':'English');
 });
+</script>
+
+
+<button id="pp58AdminHash" class="pp58-admin-hash" onclick="PPAdmin58.open()" aria-label="Administrator">#</button>
+
+<section id="pp58Admin" class="pp58-admin">
+  <div class="pp58-shell">
+    <div class="pp58-head">
+      <div><div style="font-size:.75rem;font-weight:950;letter-spacing:.1em;color:#0b9d62">PPULL</div><h1>PING PONG ADMIN</h1></div>
+      <button class="pp58-close" onclick="PPAdmin58.close()">×</button>
+    </div>
+
+    <div id="pp58Login" class="pp58-login">
+      <h2>管理者ログイン</h2>
+      <p>Ping Pong English / Japanese 管理画面</p>
+      <input id="pp58Password" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')PPAdmin58.login()">
+      <button style="width:100%" onclick="PPAdmin58.login()">ログイン</button>
+      <div id="pp58LoginError" class="pp58-error"></div>
+    </div>
+
+    <div id="pp58Dashboard" class="pp58-dashboard">
+      <div class="pp58-summary">
+        <div class="pp58-stat"><small>SPEAK-UP 待機中</small><b id="pp58PendingCount">0</b></div>
+        <div class="pp58-stat"><small>登録ユーザー</small><b id="pp58UserCount">0</b></div>
+        <div class="pp58-stat"><small>ENGLISH SETS</small><b id="pp58EnglishCount">0</b></div>
+        <div class="pp58-stat"><small>JAPANESE SETS</small><b id="pp58JapaneseCount">0</b></div>
+      </div>
+
+      <div class="pp58-tabs">
+        <button class="pp58-tab on" data-tab="speakup" onclick="PPAdmin58.tab('speakup')">SPEAK-UP</button>
+        <button class="pp58-tab" data-tab="users" onclick="PPAdmin58.tab('users')">USERS</button>
+        <button class="pp58-tab" data-tab="curriculum" onclick="PPAdmin58.tab('curriculum')">CURRICULUM</button>
+        <button class="pp58-btn ghost" onclick="PPAdmin58.refresh()">↻ REFRESH</button>
+        <button class="pp58-btn ghost" onclick="PPAdmin58.logout()">LOG OUT</button>
+      </div>
+
+      <div id="pp58PanelSpeakup" class="pp58-panel show">
+        <div class="pp58-toolbar">
+          <select id="pp58SpeakLang" onchange="PPAdmin58.renderSpeakUp()">
+            <option value="ALL">ALL LANGUAGES</option><option value="English">ENGLISH</option><option value="Japanese">JAPANESE</option>
+          </select>
+          <select id="pp58SpeakStatus" onchange="PPAdmin58.renderSpeakUp()">
+            <option value="PENDING">PENDING</option><option value="ALL">ALL STATUS</option><option value="APPROVED">APPROVED</option><option value="REJECTED">REJECTED</option><option value="CURRICULUM APPROVED">PUBLISHED</option>
+          </select>
+          <input id="pp58SpeakSearch" placeholder="Search email / nickname / text" oninput="PPAdmin58.renderSpeakUp()">
+        </div>
+        <div id="pp58SpeakList" class="pp58-list"></div>
+      </div>
+
+      <div id="pp58PanelUsers" class="pp58-panel">
+        <div class="pp58-toolbar"><input id="pp58UserSearch" placeholder="Search email" oninput="PPAdmin58.renderUsers()"></div>
+        <div id="pp58Users"></div>
+      </div>
+
+      <div id="pp58PanelCurriculum" class="pp58-panel">
+        <div class="pp58-subtabs">
+          <button id="pp58CurEn" class="on" onclick="PPAdmin58.curriculumLang('English')">ENGLISH</button>
+          <button id="pp58CurJa" onclick="PPAdmin58.curriculumLang('Japanese')">JAPANESE</button>
+        </div>
+        <div class="pp58-toolbar"><input id="pp58CurSearch" placeholder="Search set / prompt" oninput="PPAdmin58.renderCurriculum()"></div>
+        <div id="pp58Curriculum"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script id="pp58AdminScript">
+const PPAdmin58=(()=>{
+  const API=typeof PPULL_API_URL!=='undefined'?PPULL_API_URL:'';
+  const state={token:sessionStorage.getItem('pp58_admin_token')||'',data:null,tab:'speakup',curLang:'English'};
+
+  function esc58(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function jsonp(op,args={}){
+    return new Promise((resolve,reject)=>{
+      const cb='pp58cb_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
+      const script=document.createElement('script');
+      let done=false;
+      const finish=()=>{if(done)return;done=true;try{delete window[cb]}catch(e){};try{script.remove()}catch(e){}};
+      window[cb]=r=>{finish();r&&r.success?resolve(r.result):reject(new Error(r&&r.error?r.error:'Admin request failed.'))};
+      script.onerror=()=>{finish();reject(new Error('Could not connect to admin server.'))};
+      const q=new URLSearchParams({api:'pingpong-admin-v58',op,callback:cb,token:state.token||'',payload:JSON.stringify(args||{}),_ts:String(Date.now())});
+      script.src=API+'?'+q.toString();
+      document.head.appendChild(script);
+      setTimeout(()=>{if(!done){finish();reject(new Error('Admin request timed out.'))}},90000);
+    });
+  }
+  function open(){
+    document.getElementById('pp58Admin').classList.add('show');
+    if(state.token)refresh().catch(()=>showLogin()); else showLogin();
+  }
+  function close(){document.getElementById('pp58Admin').classList.remove('show')}
+  function showLogin(){
+    state.token='';sessionStorage.removeItem('pp58_admin_token');
+    document.getElementById('pp58Login').style.display='block';
+    document.getElementById('pp58Dashboard').classList.remove('show');
+  }
+  async function login(){
+    const pass=document.getElementById('pp58Password').value;
+    const err=document.getElementById('pp58LoginError');err.textContent='';
+    try{
+      const r=await jsonp('login',{password:pass});
+      state.token=r.token;sessionStorage.setItem('pp58_admin_token',state.token);
+      document.getElementById('pp58Password').value='';
+      await refresh();
+    }catch(e){err.textContent=e.message}
+  }
+  function logout(){showLogin()}
+  async function refresh(){
+    if(!state.token)return showLogin();
+    const data=await jsonp('dashboard');
+    state.data=data;
+    document.getElementById('pp58Login').style.display='none';
+    document.getElementById('pp58Dashboard').classList.add('show');
+    document.getElementById('pp58PendingCount').textContent=(data.speakUp||[]).filter(x=>x.status==='PENDING').length;
+    document.getElementById('pp58UserCount').textContent=(data.users||[]).length;
+    document.getElementById('pp58EnglishCount').textContent=data.curriculum?.English?.count||0;
+    document.getElementById('pp58JapaneseCount').textContent=data.curriculum?.Japanese?.count||0;
+    renderSpeakUp();renderUsers();renderCurriculum();
+    return data;
+  }
+  function tab(name){
+    state.tab=name;
+    document.querySelectorAll('.pp58-tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===name));
+    ['Speakup','Users','Curriculum'].forEach(n=>document.getElementById('pp58Panel'+n).classList.remove('show'));
+    document.getElementById('pp58Panel'+name.charAt(0).toUpperCase()+name.slice(1)).classList.add('show');
+  }
+  function promptsHtml(x){
+    const p=x.prompts||[];
+    return `<div class="pp58-prompts">${p.map((c,i)=>`<div class="pp58-prompt"><b>${i+1}. ${esc58(c.prompt)}</b>${c.ppr?`<small>${esc58(c.ppr)}</small>`:''}${c.translation?`<small>${esc58(c.translation)}</small>`:''}<small>${esc58(c.responseHint||'')} → ${esc58(c.answer||'')}</small></div>`).join('')}</div>`;
+  }
+  function renderSpeakUp(){
+    if(!state.data)return;
+    const lang=document.getElementById('pp58SpeakLang')?.value||'ALL';
+    const status=document.getElementById('pp58SpeakStatus')?.value||'PENDING';
+    const q=(document.getElementById('pp58SpeakSearch')?.value||'').toLowerCase();
+    let rows=(state.data.speakUp||[]).filter(x=>(lang==='ALL'||x.targetLanguage===lang)&&(status==='ALL'||x.status===status));
+    if(q)rows=rows.filter(x=>[x.email,x.nickname,x.originalText,x.displayLevel].join(' ').toLowerCase().includes(q));
+    const box=document.getElementById('pp58SpeakList');
+    if(!rows.length){box.innerHTML='<div class="pp58-empty">No matching SPEAK-UP submissions.</div>';return}
+    box.innerHTML=rows.map(x=>{
+      const cl=(x.status||'').toLowerCase().includes('reject')?'rejected':(x.status||'').toLowerCase().includes('approve')?'approved':'pending';
+      return `<article class="pp58-card" data-row="${x.row}">
+        <div class="pp58-card-head"><div><span class="pp58-badge ${cl}">${esc58(x.status||'PENDING')}</span> <span class="pp58-badge">${esc58(x.targetLanguage)} · ${esc58(x.displayLevel||'')}</span>
+        <div class="pp58-meta">${esc58(x.nickname||'')} · ${esc58(x.email||'')} · ${esc58(x.timestamp||'')}</div></div></div>
+        <div class="pp58-origin">${esc58(x.originalText||'')}</div>
+        ${promptsHtml(x)}
+        <details><summary><b>EDIT GENERATED JSON</b></summary>
+          <textarea id="pp58Json_${x.row}">${esc58(x.generatedJson||'')}</textarea>
+          <input id="pp58Note_${x.row}" style="width:100%;padding:9px;margin-top:7px;border:1px solid #ccd8d2;border-radius:10px" placeholder="Admin note" value="${esc58(x.adminNote||'')}">
+          <div class="pp58-actions"><button class="pp58-btn blue" onclick="PPAdmin58.saveEdit(${x.row})">SAVE EDIT</button></div>
+        </details>
+        <div class="pp58-actions">
+          <button class="pp58-btn primary" onclick="PPAdmin58.action(${x.row},'APPROVE')">APPROVE</button>
+          <button class="pp58-btn red" onclick="PPAdmin58.action(${x.row},'REJECT')">REJECT</button>
+          <button class="pp58-btn gold" onclick="PPAdmin58.action(${x.row},'PUBLISH')">PUBLISH TO CURRICULUM</button>
+        </div>
+      </article>`;
+    }).join('');
+  }
+  async function saveEdit(row){
+    const generatedJson=document.getElementById('pp58Json_'+row).value;
+    const adminNote=document.getElementById('pp58Note_'+row).value;
+    try{JSON.parse(generatedJson)}catch(e){return alert('Generated JSON is not valid JSON.')}
+    await jsonp('speakup-edit',{row,generatedJson,adminNote});await refresh();
+  }
+  async function action(row,action){
+    if(action==='PUBLISH'&&!confirm('Publish this set into the permanent curriculum database?'))return;
+    if(action==='REJECT'&&!confirm('Reject this SPEAK-UP submission?'))return;
+    try{await jsonp('speakup-action',{row,action});await refresh()}catch(e){alert(e.message)}
+  }
+  function renderUsers(){
+    if(!state.data)return;
+    const q=(document.getElementById('pp58UserSearch')?.value||'').toLowerCase();
+    let rows=state.data.users||[];if(q)rows=rows.filter(x=>(x.email||'').toLowerCase().includes(q));
+    const box=document.getElementById('pp58Users');
+    box.innerHTML=`<div class="pp58-tablewrap"><table class="pp58-table"><thead><tr><th>Email</th><th>Language</th><th>Completed</th><th>Review sets</th><th>Best-score total</th><th>Attempts</th><th>Updated</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${esc58(x.email)}</td><td>${esc58(x.language)}</td><td>${x.completed}</td><td>${x.review}</td><td>${x.bestScore}</td><td>${x.attempts}</td><td>${esc58(x.updatedAt||'')}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  function curriculumLang(lang){
+    state.curLang=lang;
+    document.getElementById('pp58CurEn').classList.toggle('on',lang==='English');
+    document.getElementById('pp58CurJa').classList.toggle('on',lang==='Japanese');
+    renderCurriculum();
+  }
+  function renderCurriculum(){
+    if(!state.data)return;
+    const data=state.data.curriculum?.[state.curLang]||{rows:[]};
+    const q=(document.getElementById('pp58CurSearch')?.value||'').toLowerCase();
+    let rows=data.rows||[];
+    if(q)rows=rows.filter(x=>[x.setId,x.category,x.prompt1].join(' ').toLowerCase().includes(q));
+    const box=document.getElementById('pp58Curriculum');
+    box.innerHTML=`<div class="pp58-tablewrap"><table class="pp58-table"><thead><tr><th>SET ID</th><th>Category</th><th>Prompt 1</th><th>Prompts</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${esc58(x.setId)}</td><td>${esc58(x.category)}</td><td>${esc58(x.prompt1)}</td><td>${x.promptCount}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  return{open,close,login,logout,refresh,tab,renderSpeakUp,renderUsers,renderCurriculum,curriculumLang,saveEdit,action};
+})();
 </script>
 
 </body>
