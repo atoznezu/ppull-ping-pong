@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#e7f9ee">
-<title>PPULL Ping Pong V56 CONVERSATION COUNTDOWN</title>
+<title>PPULL Ping Pong V57 POLISHED CONVERSATION</title>
 
 <style>
 html,body{margin:0;min-height:100%;background:#e7f9ee}
@@ -787,6 +787,322 @@ body{overflow:auto}
 }
 </style>
 
+
+<style id="pp57PolishedConversation">
+/* Main practice canvas */
+#pp29Practice .pp29-stage{
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255,255,255,.35), transparent 22%),
+    radial-gradient(circle at 88% 18%, rgba(255,255,255,.22), transparent 20%),
+    linear-gradient(180deg,#9fc5f5 0%,#8eb5e7 100%)!important;
+  border-radius:28px!important;
+  padding:30px 28px 24px!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 14px 32px rgba(38,74,120,.15)!important;
+}
+
+/* Each prompt entry feels like one chat exchange */
+#pp29Practice .pp31-entry{
+  margin-bottom:26px!important;
+}
+#pp29Practice .pp31-current{
+  padding:4px 0 10px!important;
+}
+
+/* PING + prompt stack */
+#pp29Practice .pp29-turn.ping{
+  display:grid!important;
+  grid-template-columns:92px minmax(0,1fr)!important;
+  column-gap:18px!important;
+  align-items:start!important;
+}
+#pp29Practice .pp29-turn.ping .pp31-avatar-img{
+  grid-column:1!important;
+  width:84px!important;
+  height:84px!important;
+  margin:12px 0 0!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  overflow:visible!important;
+  filter:drop-shadow(0 6px 10px rgba(15,53,99,.18))!important;
+}
+#pp29Practice .pp29-turn.ping .pp29-side{
+  grid-column:2!important;
+  width:100%!important;
+  min-width:0!important;
+}
+
+/* Three equally-important white chat bubbles */
+#pp29Practice .pp29-bubble.prompt,
+#pp29Practice .pp38-ppr,
+#pp29Practice .pp38-translation{
+  position:relative!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  margin:0 0 12px!important;
+  padding:19px 24px!important;
+  background:#fff!important;
+  color:#10243a!important;
+  border-radius:24px!important;
+  font-size:clamp(1.18rem,2.35vw,2rem)!important;
+  line-height:1.35!important;
+  font-weight:800!important;
+  box-shadow:0 7px 20px rgba(31,61,103,.13)!important;
+  border:1px solid rgba(71,116,167,.10)!important;
+}
+#pp29Practice .pp29-bubble.prompt:before,
+#pp29Practice .pp38-ppr:before,
+#pp29Practice .pp38-translation:before{
+  content:""!important;
+  position:absolute!important;
+  left:-14px!important;
+  top:27px!important;
+  width:0!important;
+  height:0!important;
+  border-top:10px solid transparent!important;
+  border-bottom:10px solid transparent!important;
+  border-right:15px solid #fff!important;
+}
+#pp29Practice .pp38-ppr{
+  color:#172638!important;
+}
+#pp29Practice .pp38-translation{
+  color:#172638!important;
+}
+
+/* Response row */
+#pp29Practice .pp56-pong-turn{
+  justify-content:flex-end!important;
+  margin-top:14px!important;
+}
+#pp29Practice .pp56-pong-turn .pp29-side{
+  width:100%!important;
+}
+#pp29Practice .pp56-response-row{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:16px!important;
+  width:100%!important;
+  margin-top:8px!important;
+}
+
+/* 3-2-1 countdown */
+#pp29Practice .pp56-countdown{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:8px!important;
+  width:auto!important;
+  flex:0 0 auto!important;
+}
+#pp29Practice .pp56-count{
+  width:54px!important;
+  height:54px!important;
+  flex:0 0 54px!important;
+  border-radius:50%!important;
+  display:grid!important;
+  place-items:center!important;
+  background:#f78a20!important;
+  color:#fff!important;
+  border:3px solid #ffd28f!important;
+  font-size:1.65rem!important;
+  font-weight:1000!important;
+  opacity:.22!important;
+  transform:scale(.72)!important;
+}
+#pp29Practice .pp56-count.active{
+  opacity:1!important;
+  animation:pp57CountPop .34s ease-out both!important;
+}
+@keyframes pp57CountPop{
+  0%{transform:scale(.58);box-shadow:0 0 0 0 rgba(255,148,31,0)}
+  50%{transform:scale(1.18);box-shadow:0 0 0 11px rgba(255,148,31,.24),0 0 28px rgba(255,126,18,.70)}
+  100%{transform:scale(1);box-shadow:0 0 0 2px rgba(255,148,31,.15)}
+}
+
+/* Green response cue */
+#pp29Practice .pp38-cue{
+  position:relative!important;
+  min-width:260px!important;
+  max-width:440px!important;
+  margin:0!important;
+  padding:18px 28px!important;
+  border-radius:26px!important;
+  background:linear-gradient(180deg,#11a754,#078d44)!important;
+  color:#fff!important;
+  border:4px solid #087640!important;
+  font-size:clamp(1.25rem,2.25vw,1.95rem)!important;
+  font-weight:1000!important;
+  text-align:center!important;
+  box-shadow:0 8px 20px rgba(7,74,43,.22)!important;
+  transition:.12s ease!important;
+}
+#pp29Practice .pp38-cue.speak{
+  border-color:#ffe414!important;
+  box-shadow:0 0 0 4px rgba(255,228,20,.27),0 0 28px rgba(255,214,0,.90)!important;
+  animation:pp57CuePulse .68s ease-in-out infinite alternate!important;
+}
+@keyframes pp57CuePulse{
+  to{transform:scale(1.025)}
+}
+
+/* PONG aligns with the learner cue */
+#pp29Practice .pp56-pong-avatar{
+  width:86px!important;
+  height:86px!important;
+  flex:0 0 86px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  overflow:visible!important;
+  border-radius:50%!important;
+  filter:drop-shadow(0 6px 10px rgba(14,76,49,.17))!important;
+}
+#pp29Practice .pp56-pong-avatar.pp56-listening{
+  animation:pp57PongPulse .6s ease-in-out infinite alternate!important;
+}
+@keyframes pp57PongPulse{
+  to{
+    transform:scale(1.08);
+    filter:drop-shadow(0 0 10px #38d982) drop-shadow(0 0 22px rgba(56,217,130,.62))
+  }
+}
+
+/* PING pulse while speaking */
+#pp29Practice .pp31-avatar-img.pp56-speaking{
+  animation:pp57PingPulse .56s ease-in-out infinite alternate!important;
+}
+@keyframes pp57PingPulse{
+  to{
+    transform:scale(1.08);
+    filter:drop-shadow(0 0 10px #319dff) drop-shadow(0 0 22px rgba(49,157,255,.62))
+  }
+}
+
+/* Learner's spoken answer = right-side chat bubble */
+#pp29Practice .pp29-response{
+  margin:18px 110px 0 auto!important;
+  width:min(74%,760px)!important;
+  padding:18px 24px!important;
+  background:linear-gradient(180deg,#39c85e,#24b84d)!important;
+  color:#fff!important;
+  border-radius:24px 24px 6px 24px!important;
+  font-size:clamp(1.15rem,2.15vw,1.85rem)!important;
+  font-weight:850!important;
+  box-shadow:0 8px 20px rgba(13,101,49,.18)!important;
+}
+
+/* REVIEW area */
+#pp29Practice .pp38-review{
+  width:max-content!important;
+  margin:14px 6px 0 auto!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  color:#111!important;
+  font-weight:950!important;
+  font-size:1rem!important;
+}
+#pp29Practice .pp38-review input[type="checkbox"]{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  width:23px!important;
+  height:23px!important;
+  flex:0 0 23px!important;
+  border:3px solid #111!important;
+  border-radius:3px!important;
+  background:#fff!important;
+  display:grid!important;
+  place-items:center!important;
+}
+#pp29Practice .pp38-review input[type="checkbox"]:checked{
+  background:#111!important;
+}
+#pp29Practice .pp38-review input[type="checkbox"]:checked::after{
+  content:"✓";
+  color:#fff;
+  font-size:16px;
+  font-weight:1000;
+}
+
+/* Wrong answer / retry feedback feels like coaching, not a status line */
+#pp29Practice .pp29-status{
+  margin:16px auto 0!important;
+  max-width:780px!important;
+  padding:16px 22px!important;
+  border-radius:22px!important;
+  background:#fff0f1!important;
+  color:#a42932!important;
+  font-size:1.12rem!important;
+  font-weight:900!important;
+  text-align:center!important;
+  box-shadow:0 6px 16px rgba(155,45,56,.10)!important;
+}
+
+/* Hide empty hint containers, preventing blank bars */
+#pp29Practice .pp29-hints:empty{
+  display:none!important;
+}
+
+/* Responsive */
+@media(max-width:820px){
+  #pp29Practice .pp29-stage{padding:22px 16px!important}
+  #pp29Practice .pp29-turn.ping{
+    grid-template-columns:72px minmax(0,1fr)!important;
+    column-gap:12px!important;
+  }
+  #pp29Practice .pp29-turn.ping .pp31-avatar-img{
+    width:66px!important;height:66px!important;
+  }
+  #pp29Practice .pp56-response-row{
+    gap:9px!important;
+  }
+  #pp29Practice .pp56-count{
+    width:42px!important;height:42px!important;flex-basis:42px!important;
+    font-size:1.25rem!important;
+  }
+  #pp29Practice .pp38-cue{
+    min-width:190px!important;
+    padding:14px 18px!important;
+  }
+  #pp29Practice .pp56-pong-avatar{
+    width:66px!important;height:66px!important;flex-basis:66px!important;
+  }
+  #pp29Practice .pp29-response{
+    margin-right:78px!important;
+    width:82%!important;
+  }
+}
+@media(max-width:620px){
+  #pp29Practice .pp29-turn.ping{
+    grid-template-columns:58px minmax(0,1fr)!important;
+  }
+  #pp29Practice .pp29-turn.ping .pp31-avatar-img{
+    width:54px!important;height:54px!important;
+  }
+  #pp29Practice .pp56-response-row{
+    flex-wrap:wrap!important;
+  }
+  #pp29Practice .pp56-countdown{
+    width:100%!important;
+    justify-content:center!important;
+    order:1!important;
+  }
+  #pp29Practice .pp38-cue{
+    order:2!important;
+    flex:1 1 180px!important;
+  }
+  #pp29Practice .pp56-pong-avatar{order:3!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #pp29Practice .pp56-count.active,
+  #pp29Practice .pp31-avatar-img.pp56-speaking,
+  #pp29Practice .pp56-pong-avatar.pp56-listening,
+  #pp29Practice .pp38-cue.speak{
+    animation:none!important;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -836,7 +1152,7 @@ body{overflow:auto}
 <button id="pp494MicButton" type="button" onclick="PPPractice.testMicrophone()">🎤 マイクをテスト</button>
 <div id="pp494MicStatus" class="pp494-mic-status">まだマイクをテストしていません。</div>
 </div><div class="pp29-round"><div class="pp29-round-head"><span>このラウンド / THIS ROUND</span><span id="pp29HomeRoundCount">0 / 5</span></div><div class="pp29-bar"><span id="pp29HomeRoundBar"></span></div><small id="pp29HomeRoundLabel">ROUND 1</small></div><div class="pp29-menu"><button class="pp29-card" onclick="PPPractice.choose('start')"><b>START</b><small>最初のセットから始めます。</small></button><button class="pp29-card" onclick="PPPractice.choose('continue')"><b>CONTINUE</b><small>続きのセットから始めます。</small></button><button class="pp29-card" onclick="PPPractice.choose('back')"><b>BACK</b><small>ひとつ前のセットに戻ります。</small></button><button class="pp29-card" onclick="PPPractice.choose('review')"><b>REVIEW</b><small id="pp29ReviewCount">REVIEWにチェックした文を練習します。</small></button></div></div></section>
-<section id="pp29Practice" class="pp29"><div class="pp29-shell"><div class="pp29-controlbar"><div class="pp29-stat"><small>今日:</small><b id="pp29RoundScore">0</b><small>点</small></div><div class="pp29-stat"><small>合計</small><b id="pp29TotalScore">0</b><small>点</small></div><button onclick="PPPractice.openSpeakUp()">🎤 SPEAK-UP</button><button onclick="PPPractice.openSettings()">⚙ 設定</button><button onclick="PPPractice.backHome()">⌂ ホーム</button><button id="pp29Pause" onclick="PPPractice.pause()">一時停止</button><button class="end" onclick="PPPractice.end()">終了</button></div><div class="pp29-progressgrid"><div class="pp29-progressbox"><div class="pp29-progress-head"><span>今の練習</span><span id="pp29CurrentCount">1 / 5</span></div><div class="pp29-bar"><span id="pp29CurrentBar"></span></div><small id="pp29SessionLabel"></small></div><div class="pp29-progressbox"><div class="pp29-progress-head"><span>全体の進み具合</span><span id="pp29OverallPercent">0%</span></div><div class="pp29-bar"><span id="pp29OverallBar"></span></div><small id="pp29OverallLabel"></small></div></div><div class="pp29-top"><div><div id="pp29PracticeBrand" class="pp29-eyebrow"></div><div style="font-size:11px;font-weight:900;color:#6b7f93;letter-spacing:.08em;margin-top:3px">BUILD V56 · V52 BABY CORE</div><h1 id="pp29PracticePosition" class="pp29-title"></h1></div></div><div class="pp29-modes"><button id="pp29ModePractice" class="pp29-btn ghost on" onclick="PPPractice.setMode('practice')">スピーキング本番</button><button id="pp29ModeAlong" class="pp29-btn ghost" onclick="PPPractice.setMode('along')">いっしょに言う練習</button><button id="pp29ModeAuto" class="pp29-btn ghost" onclick="PPPractice.setMode('auto')">AUTOMATIC</button><button id="pp29HintToggle" class="pp29-btn ghost on" onclick="PPPractice.toggleHints()">HINTS</button></div><div class="pp29-chat pp31-chat"><div id="pp31SpeakTip" class="pp31-speak-tip" onclick="PPPractice.goToSpeakUp()"></div><div id="pp31ChatLog" class="pp31-chat-log"></div><button id="pp31ReturnCurrent" class="pp31-return" onclick="PPPractice.returnCurrent()">↓ RETURN TO CURRENT PROMPT</button></div><div id="pp29Status" class="pp29-status"></div><div class="pp29-controls"><button class="pp29-btn ghost" onclick="PPPractice.move(-1)">← BACK</button><button class="pp29-btn primary" onclick="PPPractice.playPrompt()">🔊 PING</button><button class="pp29-btn green" onclick="PPPractice.respond()">🎤 PONG</button><button class="pp29-btn orange" onclick="PPPractice.playAnswer()">🔊 ANSWER</button><button id="pp29Review" class="pp29-btn ghost pp29-review" onclick="PPPractice.toggleReview()">☆ REVIEW</button><button class="pp29-btn primary" onclick="PPPractice.move(1)">NEXT →</button></div><div id="pp30Below" class="pp30-below"><section class="pp30-panel speakup"><div class="pp30-origin" id="pp30SpeakEyebrow">PING PONG ENGLISH SPEAK-UP</div><h2 id="pp30SpeakTitle">あなたが言いたいことをPING PONG ENGLISHへ</h2><p id="pp30SpeakHelp"></p><div class="pp30-speakform"><textarea id="pp30SpeakText"></textarea><button id="pp30SpeakButton" class="pp29-btn orange" onclick="PPPractice.submitInlineSpeakUp()">SEND / 送る</button></div><div id="pp30SpeakFeedback" class="pp30-feedback"></div></section><section class="pp30-panel"><div class="pp30-origin">CHOOSE YOUR LEVEL / レベルを選ぶ</div><h2 id="pp30LevelTitle"></h2><p id="pp30LevelHelp" class="pp30-note"></p><div id="pp30LevelTop" class="pp30-leveltop"></div><div id="pp30Letters" class="pp30-letters"></div></section><section class="pp30-panel pp30-patterns"><div id="pp30Patterns"></div></section></div></div></section>
+<section id="pp29Practice" class="pp29"><div class="pp29-shell"><div class="pp29-controlbar"><div class="pp29-stat"><small>今日:</small><b id="pp29RoundScore">0</b><small>点</small></div><div class="pp29-stat"><small>合計</small><b id="pp29TotalScore">0</b><small>点</small></div><button onclick="PPPractice.openSpeakUp()">🎤 SPEAK-UP</button><button onclick="PPPractice.openSettings()">⚙ 設定</button><button onclick="PPPractice.backHome()">⌂ ホーム</button><button id="pp29Pause" onclick="PPPractice.pause()">一時停止</button><button class="end" onclick="PPPractice.end()">終了</button></div><div class="pp29-progressgrid"><div class="pp29-progressbox"><div class="pp29-progress-head"><span>今の練習</span><span id="pp29CurrentCount">1 / 5</span></div><div class="pp29-bar"><span id="pp29CurrentBar"></span></div><small id="pp29SessionLabel"></small></div><div class="pp29-progressbox"><div class="pp29-progress-head"><span>全体の進み具合</span><span id="pp29OverallPercent">0%</span></div><div class="pp29-bar"><span id="pp29OverallBar"></span></div><small id="pp29OverallLabel"></small></div></div><div class="pp29-top"><div><div id="pp29PracticeBrand" class="pp29-eyebrow"></div><div style="font-size:11px;font-weight:900;color:#6b7f93;letter-spacing:.08em;margin-top:3px">BUILD V57 · V52 BABY CORE</div><h1 id="pp29PracticePosition" class="pp29-title"></h1></div></div><div class="pp29-modes"><button id="pp29ModePractice" class="pp29-btn ghost on" onclick="PPPractice.setMode('practice')">スピーキング本番</button><button id="pp29ModeAlong" class="pp29-btn ghost" onclick="PPPractice.setMode('along')">いっしょに言う練習</button><button id="pp29ModeAuto" class="pp29-btn ghost" onclick="PPPractice.setMode('auto')">AUTOMATIC</button><button id="pp29HintToggle" class="pp29-btn ghost on" onclick="PPPractice.toggleHints()">HINTS</button></div><div class="pp29-chat pp31-chat"><div id="pp31SpeakTip" class="pp31-speak-tip" onclick="PPPractice.goToSpeakUp()"></div><div id="pp31ChatLog" class="pp31-chat-log"></div><button id="pp31ReturnCurrent" class="pp31-return" onclick="PPPractice.returnCurrent()">↓ RETURN TO CURRENT PROMPT</button></div><div id="pp29Status" class="pp29-status"></div><div class="pp29-controls"><button class="pp29-btn ghost" onclick="PPPractice.move(-1)">← BACK</button><button class="pp29-btn primary" onclick="PPPractice.playPrompt()">🔊 PING</button><button class="pp29-btn green" onclick="PPPractice.respond()">🎤 PONG</button><button class="pp29-btn orange" onclick="PPPractice.playAnswer()">🔊 ANSWER</button><button id="pp29Review" class="pp29-btn ghost pp29-review" onclick="PPPractice.toggleReview()">☆ REVIEW</button><button class="pp29-btn primary" onclick="PPPractice.move(1)">NEXT →</button></div><div id="pp30Below" class="pp30-below"><section class="pp30-panel speakup"><div class="pp30-origin" id="pp30SpeakEyebrow">PING PONG ENGLISH SPEAK-UP</div><h2 id="pp30SpeakTitle">あなたが言いたいことをPING PONG ENGLISHへ</h2><p id="pp30SpeakHelp"></p><div class="pp30-speakform"><textarea id="pp30SpeakText"></textarea><button id="pp30SpeakButton" class="pp29-btn orange" onclick="PPPractice.submitInlineSpeakUp()">SEND / 送る</button></div><div id="pp30SpeakFeedback" class="pp30-feedback"></div></section><section class="pp30-panel"><div class="pp30-origin">CHOOSE YOUR LEVEL / レベルを選ぶ</div><h2 id="pp30LevelTitle"></h2><p id="pp30LevelHelp" class="pp30-note"></p><div id="pp30LevelTop" class="pp30-leveltop"></div><div id="pp30Letters" class="pp30-letters"></div></section><section class="pp30-panel pp30-patterns"><div id="pp30Patterns"></div></section></div></div></section>
 <section id="pp29Event" class="pp29 pp29-event"><div class="pp29-shell"><div class="pp29-top"><div><div id="pp29EventBrand" class="pp29-eyebrow"></div><h1 id="pp29EventTitle" class="pp29-title"></h1></div><button class="pp29-close" onclick="PPPractice.closeEvent()">×</button></div><div class="pp29-event-stage"><div id="pp29EventPosition" class="pp29-eyebrow" style="text-align:center"></div><div class="pp29-turn ping"><div class="pp29-avatar"><span>🦦</span><b>PING</b></div><div class="pp29-side"><div id="pp29EventPrompt" class="pp29-bubble prompt"></div></div></div><div class="pp29-turn pong"><div class="pp29-avatar pong"><span>🦦</span><b>PONG</b></div><div class="pp29-side"><div id="pp29EventCue" class="pp29-cue"></div><div id="pp29EventHints" class="pp29-hints"></div><div id="pp29EventAnswer" class="pp29-bubble pp29-response" hidden></div></div></div></div><div id="pp29EventStatus" class="pp29-status">COACH MODE</div><div class="pp29-controls"><button class="pp29-btn ghost" onclick="PPPractice.eventMove(-1)">← BACK</button><button class="pp29-btn primary" onclick="PPPractice.eventAudio('prompt')">🔊 PING</button><button class="pp29-btn green" onclick="PPPractice.eventTurn()">🏓 PLAYER TURN</button><button class="pp29-btn green" onclick="PPPractice.eventRecognize()">🎤 ONE PLAYER</button><button class="pp29-btn orange" onclick="PPPractice.eventAudio('answer')">🔊 ANSWER</button><button id="pp29EventAuto" class="pp29-btn ghost" onclick="PPPractice.eventAutomatic()">AUTOMATIC</button><button class="pp29-btn ghost" onclick="PPPractice.eventCoachCheck('GREAT')">✓ GREAT</button><button class="pp29-btn ghost" onclick="PPPractice.eventCoachCheck('TRY AGAIN')">↻ TRY AGAIN</button><button class="pp29-btn ghost" onclick="PPPractice.eventToggleAnswer()">ANSWER</button><button class="pp29-btn ghost" onclick="PPPractice.eventToggleHints()">HINTS</button><button class="pp29-btn primary" onclick="PPPractice.eventMove(1)">NEXT →</button></div></div></section>
 <section id="pp29Settings" class="pp29-settings"><div class="pp29-settingsbox"><div class="pp29-top"><h2>設定 / SETTINGS</h2><button class="pp29-close" onclick="PPPractice.closeSettings()">×</button></div><label>Prompt Audio / 質問音声 <input id="pp29PromptAudio" type="checkbox" checked></label><label>Response Audio / 返答音声 <input id="pp29AnswerAudio" type="checkbox" checked></label><label>Hints / ヒント <input id="pp29HintsSetting" type="checkbox" checked></label><label>Text Size / 文字サイズ <select id="pp29TextSize"><option value="1">小</option><option value="1.15" selected>中</option><option value="1.3">大</option></select></label><label>Interface Sounds / 操作音 <input id="pp38InterfaceSounds" type="checkbox" checked></label><p><button class="pp29-btn primary" onclick="PPPractice.saveSettings()">SAVE / 保存</button></p></div></section><div id="pp29Wait" class="pp29-wait"><span class="pp29-dot"></span><span>Please wait...<br>少々お待ちください。</span></div>
 <section id="pp32Login" class="pp32-modal" role="dialog" aria-modal="true" aria-labelledby="pp32LoginTitle"><div class="pp32-box"><button class="pp32-modal-close" onclick="PPPractice.closeLogin()" aria-label="Close">×</button><div class="pp32-gate-icon">🏓</div><h2 id="pp32LoginTitle"></h2><p id="pp32LoginMessage"></p><input id="pp32Email" type="email" inputmode="email" autocomplete="email" placeholder="Email"><input id="pp32Nickname" autocomplete="nickname" placeholder="Nickname / ニックネーム"><div class="pp32-actions"><button id="pp32ClaimButton" class="pp29-btn green" onclick="PPPractice.claimGuest()"></button></div><p id="pp32LoginFeedback" class="pp30-feedback" aria-live="polite"></p></div></section>
@@ -1056,6 +1372,27 @@ function esc(value){
     .replace(/"/g,'&quot;')
     .replace(/'/g,'&#39;');
 }
+
+function pp57CleanCue(entry){
+  let cue=String(entry&&entry.cue||'')
+    .replace(/🗣️/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+
+  if(cue)return cue;
+
+  const n=Number(entry&&entry.promptNumber||1);
+  if(st.language==='Japanese'){
+    if(n===3)return '🏓 •••';
+    if(n===4)return '🏓 そうですね。•••';
+    return '🏓 はい，•••';
+  }
+
+  if(n===3)return '🏓 •••';
+  if(n===4)return "🏓 That's right. •••";
+  return '🏓 Yes, •••';
+}
+
 function renderConversationV38(){
   ensureHistory();
   const currentKey=historyKey();
@@ -1064,6 +1401,7 @@ function renderConversationV38(){
     const currentEntry=entry.key===currentKey;
     const reviewed=isPromptReviewedV38(entry.setId,entry.promptNumber);
     const translation=entry.translation||'';
+    const cleanCue=pp57CleanCue(entry);
     const ppr=entry.ppr||'';
 
     const leftSupport=st.language==='English'
@@ -1093,7 +1431,7 @@ function renderConversationV38(){
             ${countdown}
             <div ${currentEntry?'id="pp29Cue"':''}
                  class="pp29-cue pp38-cue ${currentEntry&&st.turnActive?'speak':''}">
-              ${esc(entry.cue||'')}
+              ${esc(cleanCue)}
             </div>
             <img class="pp31-avatar-img pp56-pong-avatar ${currentEntry&&st.turnActive?'pp56-listening':''}"
                  src="${PONG_ICON}" alt="PONG"
@@ -1715,8 +2053,7 @@ async function pp52Prompt(checkMic=true){
   setTurn(false);
 
   el('pp29Status').textContent=
-    (st.tries?('TRY '+(st.tries+1)+' · '):'')+
-    tr('聞いてください…','LISTEN…');
+    (st.tries?tr('もう一回答えてください。','TRY AGAIN.') : tr('聞いてください…','LISTEN…'));
 
   if(checkMic){
     const ok=await pp52EnsureMic();
