@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#e7f9ee">
-<title>PPULL Ping Pong V64 RESTORED AUDIO</title>
+<title>PPULL Ping Pong V65 DIRECT TTS</title>
 
 <style>
 html,body{margin:0;min-height:100%;background:#e7f9ee}
@@ -1837,6 +1837,35 @@ button,input,select,textarea{
 }
 </style>
 
+
+<style id="pp65StickyAndCompactLabels">
+/* Lower orange bar should pass OVER the upper bar while scrolling. */
+#pp62Sticky{
+  top:6px!important;
+  z-index:140!important;
+  box-shadow:0 14px 32px rgba(23,51,93,.28)!important;
+}
+
+/* Upper bar remains visible normally, but loses the stacking contest. */
+#pp29Practice .pp29-controlbar{
+  z-index:110!important;
+}
+
+/* Keep compact lower labels readable for older users. */
+#pp62Sticky .pp62-pill{
+  font-size:15px!important;
+  padding:9px 13px!important;
+  white-space:nowrap!important
+}
+
+@media(max-width:1000px){
+  #pp62Sticky{top:6px!important}
+}
+@media(max-width:650px){
+  #pp62Sticky{top:6px!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -1890,7 +1919,7 @@ button,input,select,textarea{
 <button id="pp494MicButton" type="button" onclick="PPPractice.testMicrophone()">🎤 マイクをテスト</button>
 <div id="pp494MicStatus" class="pp494-mic-status">まだマイクをテストしていません。</div>
 </div><div class="pp29-round"><div class="pp29-round-head"><span>このラウンド / THIS ROUND</span><span id="pp29HomeRoundCount">0 / 5</span></div><div class="pp29-bar"><span id="pp29HomeRoundBar"></span></div><small id="pp29HomeRoundLabel">ROUND 1</small></div><div class="pp29-menu"><button class="pp29-card" onclick="PPPractice.choose('start')"><b>START</b><small>最初のセットから始めます。</small></button><button class="pp29-card" onclick="PPPractice.choose('continue')"><b>CONTINUE</b><small>続きのセットから始めます。</small></button><button class="pp29-card" onclick="PPPractice.choose('back')"><b>BACK</b><small>ひとつ前のセットに戻ります。</small></button><button class="pp29-card" onclick="PPPractice.choose('review')"><b>REVIEW</b><small id="pp29ReviewCount">REVIEWにチェックした文を練習します。</small></button></div></div></section>
-<section id="pp29Practice" class="pp29"><div class="pp29-shell"><div class="pp29-controlbar"><div class="pp29-stat"><small>今日:</small><b id="pp29RoundScore">0</b><small>点</small></div><div class="pp29-stat"><small>合計</small><b id="pp29TotalScore">0</b><small>点</small></div><button id="pp64UpperTalk" class="pp64-upper-mode" onclick="PPPractice.setMode('practice')">スピーキング本番</button><button id="pp64UpperTogether" class="pp64-upper-mode" onclick="PPPractice.setMode('along')">いっしょに練習</button><button id="pp64UpperSettings" onclick="PPPractice.openSettings()">⚙ 設定</button><button id="pp64UpperHome" onclick="PPPractice.backHome()">⌂ ホーム</button><button id="pp29Pause" onclick="PPPractice.pause()">一時停止</button><button id="pp64UpperEnd" class="end" onclick="PPPractice.end()">終了</button></div><div class="pp29-progressgrid"><div class="pp29-progressbox"><div class="pp29-progress-head"><span>今の練習</span><span id="pp29CurrentCount">1 / 5</span></div><div class="pp29-bar"><span id="pp29CurrentBar"></span></div><small id="pp29SessionLabel"></small></div><div class="pp29-progressbox"><div class="pp29-progress-head"><span>全体の進み具合</span><span id="pp29OverallPercent">0%</span></div><div class="pp29-bar"><span id="pp29OverallBar"></span></div><small id="pp29OverallLabel"></small></div></div><div class="pp29-top"><div><div id="pp29PracticeBrand" class="pp29-eyebrow"></div><div style="font-size:11px;font-weight:900;color:#6b7f93;letter-spacing:.08em;margin-top:3px">BUILD V64 · V52 BABY CORE</div><h1 id="pp29PracticePosition" class="pp29-title"></h1></div></div><div class="pp29-modes"><button id="pp29ModePractice" class="pp29-btn ghost on" onclick="PPPractice.setMode('practice')">スピーキング本番</button><button id="pp29ModeAlong" class="pp29-btn ghost" onclick="PPPractice.setMode('along')">いっしょに言う練習</button><button id="pp29ModeAuto" class="pp29-btn ghost" onclick="PPPractice.setMode('auto')">AUTOMATIC</button><button id="pp61QuestionText" class="pp29-btn ghost on pp61-display-toggle" onclick="PPPractice.toggleQuestionText()">QUESTION TEXT</button><button id="pp61ReplyAudio" class="pp29-btn ghost on pp61-display-toggle" onclick="PPPractice.toggleReplyAudio()">REPLY AUDIO</button><button id="pp61ReplyText" class="pp29-btn ghost on pp61-display-toggle" onclick="PPPractice.toggleReplyText()">REPLY TEXT</button></div><div class="pp29-chat pp31-chat"><div id="pp31SpeakTip" class="pp31-speak-tip" onclick="PPPractice.goToSpeakUp()"></div><div id="pp31ChatLog" class="pp31-chat-log"></div><button id="pp31ReturnCurrent" class="pp31-return" onclick="PPPractice.returnCurrent()">↓ RETURN TO CURRENT PROMPT</button></div><div id="pp29Status" class="pp29-status"></div><div class="pp29-controls"><button class="pp29-btn ghost" onclick="PPPractice.move(-1)">← BACK</button><button class="pp29-btn primary" onclick="PPPractice.playPrompt()">🔊 PING</button><button class="pp29-btn green" onclick="PPPractice.respond()">🎤 PONG</button><button class="pp29-btn orange" onclick="PPPractice.playAnswer()">🔊 ANSWER</button><button id="pp29Review" class="pp29-btn ghost pp29-review" onclick="PPPractice.toggleReview()">☆ REVIEW</button><button class="pp29-btn primary" onclick="PPPractice.move(1)">NEXT →</button></div><div id="pp30Below" class="pp30-below"><section class="pp30-panel speakup"><div class="pp30-origin" id="pp30SpeakEyebrow">PING PONG ENGLISH SPEAK-UP</div><h2 id="pp30SpeakTitle">あなたが言いたいことをPING PONG ENGLISHへ</h2><p id="pp30SpeakHelp"></p><div class="pp30-speakform"><textarea id="pp30SpeakText"></textarea><button id="pp30SpeakButton" class="pp29-btn orange" onclick="PPPractice.submitInlineSpeakUp()">SEND / 送る</button></div><div id="pp30SpeakFeedback" class="pp30-feedback"></div></section><section class="pp30-panel"><div class="pp30-origin">CHOOSE YOUR LEVEL / レベルを選ぶ</div><h2 id="pp30LevelTitle"></h2><p id="pp30LevelHelp" class="pp30-note"></p><div id="pp30LevelTop" class="pp30-leveltop"></div><div id="pp30Letters" class="pp30-letters"></div></section><section class="pp30-panel pp30-patterns"><div id="pp30Patterns"></div></section></div></div></section>
+<section id="pp29Practice" class="pp29"><div class="pp29-shell"><div class="pp29-controlbar"><div class="pp29-stat"><small>今日:</small><b id="pp29RoundScore">0</b><small>点</small></div><div class="pp29-stat"><small>合計</small><b id="pp29TotalScore">0</b><small>点</small></div><button id="pp64UpperTalk" class="pp64-upper-mode" onclick="PPPractice.setMode('practice')">スピーキング本番</button><button id="pp64UpperTogether" class="pp64-upper-mode" onclick="PPPractice.setMode('along')">いっしょに練習</button><button id="pp64UpperSettings" onclick="PPPractice.openSettings()">⚙ 設定</button><button id="pp64UpperHome" onclick="PPPractice.backHome()">⌂ ホーム</button><button id="pp29Pause" onclick="PPPractice.pause()">一時停止</button><button id="pp64UpperEnd" class="end" onclick="PPPractice.end()">終了</button></div><div class="pp29-progressgrid"><div class="pp29-progressbox"><div class="pp29-progress-head"><span>今の練習</span><span id="pp29CurrentCount">1 / 5</span></div><div class="pp29-bar"><span id="pp29CurrentBar"></span></div><small id="pp29SessionLabel"></small></div><div class="pp29-progressbox"><div class="pp29-progress-head"><span>全体の進み具合</span><span id="pp29OverallPercent">0%</span></div><div class="pp29-bar"><span id="pp29OverallBar"></span></div><small id="pp29OverallLabel"></small></div></div><div class="pp29-top"><div><div id="pp29PracticeBrand" class="pp29-eyebrow"></div><div style="font-size:11px;font-weight:900;color:#6b7f93;letter-spacing:.08em;margin-top:3px">BUILD V65 · V52 BABY CORE</div><h1 id="pp29PracticePosition" class="pp29-title"></h1></div></div><div class="pp29-modes"><button id="pp29ModePractice" class="pp29-btn ghost on" onclick="PPPractice.setMode('practice')">スピーキング本番</button><button id="pp29ModeAlong" class="pp29-btn ghost" onclick="PPPractice.setMode('along')">いっしょに言う練習</button><button id="pp29ModeAuto" class="pp29-btn ghost" onclick="PPPractice.setMode('auto')">AUTOMATIC</button><button id="pp61QuestionText" class="pp29-btn ghost on pp61-display-toggle" onclick="PPPractice.toggleQuestionText()">QUESTION TEXT</button><button id="pp61ReplyAudio" class="pp29-btn ghost on pp61-display-toggle" onclick="PPPractice.toggleReplyAudio()">REPLY AUDIO</button><button id="pp61ReplyText" class="pp29-btn ghost on pp61-display-toggle" onclick="PPPractice.toggleReplyText()">REPLY TEXT</button></div><div class="pp29-chat pp31-chat"><div id="pp31SpeakTip" class="pp31-speak-tip" onclick="PPPractice.goToSpeakUp()"></div><div id="pp31ChatLog" class="pp31-chat-log"></div><button id="pp31ReturnCurrent" class="pp31-return" onclick="PPPractice.returnCurrent()">↓ RETURN TO CURRENT PROMPT</button></div><div id="pp29Status" class="pp29-status"></div><div class="pp29-controls"><button class="pp29-btn ghost" onclick="PPPractice.move(-1)">← BACK</button><button class="pp29-btn primary" onclick="PPPractice.playPrompt()">🔊 PING</button><button class="pp29-btn green" onclick="PPPractice.respond()">🎤 PONG</button><button class="pp29-btn orange" onclick="PPPractice.playAnswer()">🔊 ANSWER</button><button id="pp29Review" class="pp29-btn ghost pp29-review" onclick="PPPractice.toggleReview()">☆ REVIEW</button><button class="pp29-btn primary" onclick="PPPractice.move(1)">NEXT →</button></div><div id="pp30Below" class="pp30-below"><section class="pp30-panel speakup"><div class="pp30-origin" id="pp30SpeakEyebrow">PING PONG ENGLISH SPEAK-UP</div><h2 id="pp30SpeakTitle">あなたが言いたいことをPING PONG ENGLISHへ</h2><p id="pp30SpeakHelp"></p><div class="pp30-speakform"><textarea id="pp30SpeakText"></textarea><button id="pp30SpeakButton" class="pp29-btn orange" onclick="PPPractice.submitInlineSpeakUp()">SEND / 送る</button></div><div id="pp30SpeakFeedback" class="pp30-feedback"></div></section><section class="pp30-panel"><div class="pp30-origin">CHOOSE YOUR LEVEL / レベルを選ぶ</div><h2 id="pp30LevelTitle"></h2><p id="pp30LevelHelp" class="pp30-note"></p><div id="pp30LevelTop" class="pp30-leveltop"></div><div id="pp30Letters" class="pp30-letters"></div></section><section class="pp30-panel pp30-patterns"><div id="pp30Patterns"></div></section></div></div></section>
 <section id="pp29Event" class="pp29 pp29-event"><div class="pp29-shell"><div class="pp29-top"><div><div id="pp29EventBrand" class="pp29-eyebrow"></div><h1 id="pp29EventTitle" class="pp29-title"></h1></div><button class="pp29-close" onclick="PPPractice.closeEvent()">×</button></div><div class="pp29-event-stage"><div id="pp29EventPosition" class="pp29-eyebrow" style="text-align:center"></div><div class="pp29-turn ping"><div class="pp29-avatar"><span>🦦</span><b>PING</b></div><div class="pp29-side"><div id="pp29EventPrompt" class="pp29-bubble prompt"></div></div></div><div class="pp29-turn pong"><div class="pp29-avatar pong"><span>🦦</span><b>PONG</b></div><div class="pp29-side"><div id="pp29EventCue" class="pp29-cue"></div><div id="pp29EventHints" class="pp29-hints"></div><div id="pp29EventAnswer" class="pp29-bubble pp29-response" hidden></div></div></div></div><div id="pp29EventStatus" class="pp29-status">COACH MODE</div><div class="pp29-controls"><button class="pp29-btn ghost" onclick="PPPractice.eventMove(-1)">← BACK</button><button class="pp29-btn primary" onclick="PPPractice.eventAudio('prompt')">🔊 PING</button><button class="pp29-btn green" onclick="PPPractice.eventTurn()">🏓 PLAYER TURN</button><button class="pp29-btn green" onclick="PPPractice.eventRecognize()">🎤 ONE PLAYER</button><button class="pp29-btn orange" onclick="PPPractice.eventAudio('answer')">🔊 ANSWER</button><button id="pp29EventAuto" class="pp29-btn ghost" onclick="PPPractice.eventAutomatic()">AUTOMATIC</button><button class="pp29-btn ghost" onclick="PPPractice.eventCoachCheck('GREAT')">✓ GREAT</button><button class="pp29-btn ghost" onclick="PPPractice.eventCoachCheck('TRY AGAIN')">↻ TRY AGAIN</button><button class="pp29-btn ghost" onclick="PPPractice.eventToggleAnswer()">ANSWER</button><button class="pp29-btn ghost" onclick="PPPractice.eventToggleHints()">HINTS</button><button class="pp29-btn primary" onclick="PPPractice.eventMove(1)">NEXT →</button></div></div></section>
 <section id="pp29Settings" class="pp29-settings"><div class="pp29-settingsbox pp64-settingsbox"><div class="pp29-top"><div><div class="pp64-settings-kicker">DISPLAY & AUDIO</div><h2>設定 / SETTINGS</h2></div><button class="pp29-close" onclick="PPPractice.closeSettings()">×</button></div><label data-pp64-label="questionAudio">Question Audio / 質問音声 <input id="pp29PromptAudio" type="checkbox" checked onchange="PPPractice.settingsLive()"></label><label data-pp64-label="questionText">Question Text / 質問テキスト <input id="pp64QuestionTextSetting" type="checkbox" checked onchange="PPPractice.settingsLive()"></label><label id="pp64RomajiSettingRow" data-pp64-label="romaji">Romaji / ローマ字 <input id="pp64RomajiSetting" type="checkbox" checked onchange="PPPractice.settingsLive()"></label><label data-pp64-label="translation">Translation / 翻訳 <input id="pp64TranslationSetting" type="checkbox" checked onchange="PPPractice.settingsLive()"></label><label data-pp64-label="replyAudio">Reply Audio / 答え音声 <input id="pp29AnswerAudio" type="checkbox" checked onchange="PPPractice.settingsLive()"></label><label data-pp64-label="replyText">Reply Text / 答えテキスト <input id="pp64ReplyTextSetting" type="checkbox" checked onchange="PPPractice.settingsLive()"></label><label data-pp64-label="textSize">Text Size / 文字サイズ <select id="pp29TextSize" onchange="PPPractice.settingsLive()"><option value="1.10">標準 / STANDARD</option><option value="1.25" selected>大 / LARGE</option><option value="1.40">特大 / EXTRA LARGE</option></select></label><label data-pp64-label="uiSounds">UI Sounds / 操作音 <input id="pp38InterfaceSounds" type="checkbox" checked onchange="PPPractice.settingsLive()"></label><p><button class="pp29-btn primary pp64-done" onclick="PPPractice.saveSettings()">DONE / 完了</button></p></div></section><div id="pp29Wait" class="pp29-wait"><span class="pp29-dot"></span><span>Please wait...<br>少々お待ちください。</span></div>
 
@@ -4524,16 +4553,15 @@ function pp62RenderStickyBanner(){
 
   const controls=[
     `<button id="pp64SpeakUp" class="pp62-pill pp64-speakup" onclick="PPPractice.openSpeakUp()">🎤 SPEAK-UP</button>`,
-    pp62Pill('pp64QuestionAudio',tr('質問音声','QUESTION AUDIO'),st.settings.promptAudio!==false,'PPPractice.toggleQuestionAudio()'),
-    pp62Pill('pp64QuestionText',tr('質問テキスト','QUESTION TEXT'),st.pp64QuestionText!==false,'PPPractice.toggleQuestionText()'),
+    pp62Pill('pp64QuestionAudio',tr('Q.音声','Q.AUDIO'),st.settings.promptAudio!==false,'PPPractice.toggleQuestionAudio()'),
+    pp62Pill('pp64QuestionText',tr('Q.テキスト','Q.TEXT'),st.pp64QuestionText!==false,'PPPractice.toggleQuestionText()'),
     isJapanese
       ? pp62Pill('pp64Romaji',tr('ローマ字','ROMAJI'),st.pp64Romaji!==false,'PPPractice.toggleRomaji()')
       : '',
-    pp62Pill('pp64Translation',tr('翻訳','TRANSLATION'),st.pp64Translation!==false,'PPPractice.toggleTranslation()'),
+    pp62Pill('pp64Translation',tr('翻訳','TRANSL'),st.pp64Translation!==false,'PPPractice.toggleTranslation()'),
     pp62Pill('pp64ReplyAudio',tr('答え音声','REPLY AUDIO'),st.settings.answerAudio!==false,'PPPractice.toggleReplyAudio()'),
     pp62Pill('pp64ReplyText',tr('答えテキスト','REPLY TEXT'),st.pp64ReplyText!==false,'PPPractice.toggleReplyText()'),
-    `<button id="pp64TextSize" class="pp62-pill pp64-textsize" onclick="PPPractice.cycleTextSize()">${sizeLabel}</button>`,
-    pp62Pill('pp64UiSounds',tr('操作音','UI SOUNDS'),st.settings.interfaceSounds!==false,'PPPractice.toggleUiSounds()')
+    `<button id="pp64TextSize" class="pp62-pill pp64-textsize" onclick="PPPractice.cycleTextSize()">${sizeLabel}</button>`
   ].join('');
 
   bar.innerHTML=`
@@ -5099,6 +5127,196 @@ move=async function(d){
   renderPractice();
   setTimeout(playPrompt,120);
 }
+
+
+/* ============================================================
+   V65 — DIRECT APPS SCRIPT TTS
+   Browser -> Apps Script JSONP -> existing getPingPongTtsV28()
+   Playback uses HTMLAudioElement directly.
+   ============================================================ */
+
+function pp65SpokenText(text){
+  if(st.language==='Japanese'){
+    return String(text||'')
+      .replace(/[＜＞]/g,'')
+      .replace(/\s+/g,'')
+      .trim();
+  }
+  return String(text||'').trim();
+}
+
+function pp65TtsJsonp(text,role){
+  return new Promise((resolve,reject)=>{
+    const callback='pp65tts_'+Date.now()+'_'+Math.floor(Math.random()*1000000);
+    const script=document.createElement('script');
+    let finished=false;
+    let timer=null;
+
+    const cleanup=()=>{
+      if(finished)return;
+      finished=true;
+      if(timer)clearTimeout(timer);
+      try{delete window[callback]}catch(ignore){}
+      try{script.remove()}catch(ignore){}
+    };
+
+    window[callback]=response=>{
+      cleanup();
+      if(response&&response.success&&response.result){
+        resolve(response.result);
+      }else{
+        reject(new Error(
+          response&&response.error
+            ? response.error
+            : 'TTS request failed.'
+        ));
+      }
+    };
+
+    script.onerror=()=>{
+      cleanup();
+      reject(new Error('Could not connect to the TTS server.'));
+    };
+
+    const qs=new URLSearchParams({
+      api:'tts-v65',
+      callback,
+      language:st.language,
+      role:String(role||'PING'),
+      text:pp65SpokenText(text),
+      _ts:String(Date.now())
+    });
+
+    script.src=PPULL_API_URL+'?'+qs.toString();
+    document.head.appendChild(script);
+
+    timer=setTimeout(()=>{
+      cleanup();
+      reject(new Error('TTS request timed out.'));
+    },12000);
+  });
+}
+
+async function pp65PlayBase64Audio(result){
+  if(!result?.audioContent)return false;
+
+  return await new Promise(resolve=>{
+    try{
+      // Stop only prior spoken-media audio; UI sounds remain independent.
+      if(st.audio&&typeof st.audio.pause==='function'){
+        try{st.audio.pause()}catch(ignore){}
+      }
+
+      const mime=String(result.mimeType||'audio/mpeg');
+      const a=new Audio();
+      a.preload='auto';
+      a.volume=1;
+      a.src='data:'+mime+';base64,'+result.audioContent;
+      st.audio=a;
+
+      let done=false;
+      let actuallyPlayed=false;
+      const finish=ok=>{
+        if(done)return;
+        done=true;
+        resolve(ok);
+      };
+
+      a.onplaying=()=>{
+        actuallyPlayed=true;
+      };
+      a.onended=()=>finish(actuallyPlayed);
+      a.onerror=()=>finish(false);
+      a.onabort=()=>finish(false);
+
+      const p=a.play();
+      if(p&&typeof p.catch==='function'){
+        p.catch(err=>{
+          console.warn('V65 HTMLAudio play rejected',err);
+          finish(false);
+        });
+      }
+
+      setTimeout(()=>finish(false),18000);
+    }catch(e){
+      console.warn('V65 HTMLAudio exception',e);
+      resolve(false);
+    }
+  });
+}
+
+async function pp65NativeFallback(text,role){
+  const spoken=pp65SpokenText(text);
+  if(!spoken||!window.speechSynthesis||!window.SpeechSynthesisUtterance)return false;
+
+  return await new Promise(resolve=>{
+    try{
+      const voices=speechSynthesis.getVoices()||[];
+      const target=st.language==='Japanese'?'ja-JP':'en-US';
+      const prefix=st.language==='Japanese'?'ja':'en';
+      const voice=
+        voices.find(v=>String(v.lang||'').toLowerCase()===target.toLowerCase()) ||
+        voices.find(v=>String(v.lang||'').toLowerCase().startsWith(prefix)) ||
+        null;
+
+      const u=new SpeechSynthesisUtterance(spoken);
+      st.pp65Utterance=u;
+      u.lang=target;
+      if(voice)u.voice=voice;
+      u.volume=1;
+      u.rate=st.language==='Japanese'?.90:.92;
+      u.pitch=role==='PONG'?.98:1.02;
+
+      let done=false;
+      let started=false;
+      const finish=ok=>{
+        if(done)return;
+        done=true;
+        st.pp65Utterance=null;
+        resolve(ok);
+      };
+
+      u.onstart=()=>{started=true};
+      u.onend=()=>finish(started);
+      u.onerror=()=>finish(false);
+
+      try{speechSynthesis.cancel()}catch(ignore){}
+      try{speechSynthesis.resume()}catch(ignore){}
+
+      // A tiny delay avoids Chrome dropping utterances immediately after cancel().
+      setTimeout(()=>{
+        try{speechSynthesis.speak(u)}
+        catch(e){finish(false)}
+      },100);
+
+      setTimeout(()=>finish(false),15000);
+    }catch(e){
+      console.warn('V65 native TTS fallback failed',e);
+      resolve(false);
+    }
+  });
+}
+
+async function pp65Speak(text,role){
+  if(!text||st.paused)return;
+
+  // Use the existing V62/V64 booleans exactly as-is.
+  const spoken=pp65SpokenText(text);
+  if(!spoken)return;
+
+  try{
+    const result=await pp65TtsJsonp(spoken,role);
+    const ok=await pp65PlayBase64Audio(result);
+    if(ok)return;
+  }catch(e){
+    console.warn('V65 direct TTS failed; using native fallback.',e);
+  }
+
+  await pp65NativeFallback(spoken,role);
+}
+
+// FINAL lesson-speech engine.
+pp52Speak=pp65Speak;
 
 renderConversation=renderConversationV38;renderPractice=renderPracticeV38;playPrompt=pp52Prompt;respond=pp52Listen;setMode=setModeV38;
 return{selectLevelOnly:pp62SelectLevelOnly,switchCourse:pp62SwitchCourse,toggleQuestionAudio:pp64ToggleQuestionAudio,toggleQuestionText:pp64ToggleQuestionText,toggleRomaji:pp64ToggleRomaji,toggleTranslation:pp64ToggleTranslation,toggleReplyAudio:pp64ToggleReplyAudio,toggleReplyText:pp64ToggleReplyText,toggleUiSounds:pp64ToggleUiSounds,cycleTextSize:pp64CycleTextSize,settingsLive:pp64SettingsLive,runMicCheck:pp59RunMicCheck,cancelMicCheck:pp59CancelMicCheck,testMicrophone:testMicrophoneV494,open:openV38,login:loginV38,claimGuest:claimGuestV60,closeLogin,choose:pp52Choose,jumpLevel:jumpLevelV36,selectEnglishLevel:selectEnglishLevelV36,submitInlineSpeakUp,submitPopupSpeakUp:submitPopupSpeakUpV541,setMode:setModeV38,toggleHints,playPrompt:pp52Prompt,playAnswer,respond:pp52Listen,move,toggleReview,togglePromptReview:pp54PromptReview,pause,backHome,end,close,openSpeakUp:openSpeakUpV541,closeSpeakUp,goToSpeakUp:goToSpeakUpV541,practiceSpeakUp:practiceSpeakUpV541,retrySpeakUp:retrySpeakUpV541,changeInterfaceLanguage,replayHistory:pp52Replay,returnCurrent,openSettings:pp64OpenSettings,closeSettings,saveSettings:pp64SaveSettings,openEvent,eventMove,eventAudio,eventTurn,eventRecognize,eventAutomatic,eventCoachCheck,eventToggleAnswer,eventToggleHints,closeEvent}})();openLearningV274=function(language){PPPractice.open(language)};lesson=function(eventId){PPPractice.openEvent(eventId)};
